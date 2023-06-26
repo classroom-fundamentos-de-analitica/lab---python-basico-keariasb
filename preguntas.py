@@ -11,7 +11,16 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
+import csv
 
+def leer():
+    lista=[]
+    with open('data.csv') as File:
+        reader = csv.reader(File, delimiter='\t')
+                        
+        for row in reader:
+            lista.append(row)
+    return lista
 
 def pregunta_01():
     """
@@ -21,7 +30,11 @@ def pregunta_01():
     214
 
     """
-    return
+    lista = leer()
+    count=0
+    for i in lista:
+        count+= int(i[1])
+    return count
 
 
 def pregunta_02():
@@ -39,7 +52,18 @@ def pregunta_02():
     ]
 
     """
-    return
+    lista = leer()
+    result=[]
+    letras=['A','B','C','D','E']
+
+    for i in letras:
+        valor = 0 
+        for j in lista:
+            if(i==j[0]):
+                valor+=1
+        result.append((i,valor))
+  
+    return result
 
 
 def pregunta_03():
@@ -57,7 +81,17 @@ def pregunta_03():
     ]
 
     """
-    return
+    lista = leer()
+    result=[]
+    letras=['A','B','C','D','E']
+    for i in letras:
+        valor =0 
+        for j in lista:
+            if(i==j[0]):
+                valor+=int(j[1])
+        result.append((i,valor))
+ 
+    return result
 
 
 def pregunta_04():
@@ -82,7 +116,20 @@ def pregunta_04():
     ]
 
     """
-    return
+    lista = leer()
+    result=[]
+    data=['01','02','03','04','05','06','07','08','09','10','11','12']
+
+    for i in data:
+        valor=0
+        for j in range(len(lista)):
+            variable = lista[j][2].split("-")
+            fecha = variable[1]
+            if(i==fecha):
+                valor +=1
+        result.append((i,valor))
+    
+    return result
 
 
 def pregunta_05():
@@ -100,7 +147,18 @@ def pregunta_05():
     ]
 
     """
-    return
+    lista = leer()
+    result=[]
+    data=['A','B','C','D','E']
+
+    for i in data:
+        tupla=[]
+        for j in lista:
+            if(i==j[0]):
+                tupla.append(int(j[1]))
+        result.append((i,max(tupla),min(tupla)))
+   
+    return result
 
 
 def pregunta_06():
@@ -125,7 +183,26 @@ def pregunta_06():
     ]
 
     """
-    return
+    lista = leer()
+    result=[]
+    data=['aaa','bbb','ccc','ddd','eee','fff','ggg','hhh','iii','jjj']
+    valores=[]
+
+    for i in lista:
+        ultimo = i[4].split(",")
+        for k in ultimo:
+            valores.append(k)
+    
+    for d in data:
+        tupla=[] 
+        for l in valores:
+            if(d==l[:3]):
+                num = l.split(":")
+                tupla.append(int(num[1]))
+        result.append((d,min(tupla),max(tupla)))
+
+    
+    return result
 
 
 def pregunta_07():
@@ -149,7 +226,18 @@ def pregunta_07():
     ]
 
     """
-    return
+    lista = leer()
+    result=[]
+    numeros=['0','1','2','3','4','5','6','7','8','9']
+
+    for n in numeros:
+        contiene =[]
+        for a in lista:
+            if(a[1]==n):
+                contiene.append(a[0])
+        result.append((int(n),contiene))
+
+    return result
 
 
 def pregunta_08():
@@ -174,7 +262,18 @@ def pregunta_08():
     ]
 
     """
-    return
+    lista = leer()
+    result=[]
+    numeros=['0','1','2','3','4','5','6','7','8','9']
+    
+    for n in numeros:
+        contiene =[]
+        for a in lista:
+            if(a[1]==n and a[0] not in contiene):
+                contiene.append(a[0])
+
+        result.append((int(n),sorted(contiene)))
+    return result
 
 
 def pregunta_09():
@@ -197,7 +296,25 @@ def pregunta_09():
     }
 
     """
-    return
+    lista = leer()
+    result={}
+    data=['aaa','bbb','ccc','ddd','eee','fff','ggg','hhh','iii','jjj']
+    valores=[]
+    for Lasval in lista:
+        ultimo = Lasval[4].split(",")
+        for k in ultimo:
+            valores.append(k)
+
+    for d in data:
+        tupla=[] 
+        for l in valores:
+            if(d==l[:3]):
+                num = l.split(":")
+                tupla.append(int(num[1]))
+        result.update({d:len(tupla)})
+
+    return result
+
 
 
 def pregunta_10():
@@ -218,7 +335,15 @@ def pregunta_10():
 
 
     """
-    return
+    lista = leer()
+    result=[]
+
+    for a in lista:
+        val = len(a[3].split(","))
+        val2 = len(a[4].split(","))
+        result.append((a[0],val,val2))
+
+    return result
 
 
 def pregunta_11():
@@ -239,7 +364,21 @@ def pregunta_11():
 
 
     """
-    return
+    lista = leer()
+    result={}
+    letras= ['a','b','c','d','e','f','g']
+    newArr=[]
+    for a in lista:
+        newArr.append((a[1],a[3].split(",")))
+    
+    for l in letras:
+        contar = 0
+        for n in newArr:
+            if(l in n[1]):
+                contar += int(n[0])
+        result.update({l:contar})
+
+    return result
 
 
 def pregunta_12():
@@ -257,4 +396,17 @@ def pregunta_12():
     }
 
     """
-    return
+    lista = leer()
+    result={}
+    letras= ["A","B","C","D","E"]
+    for l in letras:
+        contar = 0
+        for a in lista:
+            if(a[0]==l):
+                lista2 = a[4].split(",")
+                for val in lista2: 
+                    s= val.split(":")
+                    contar+=int(s[1])
+        result.update({l:contar})
+
+    return result
